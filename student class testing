@@ -1,0 +1,61 @@
+"""
+Program: student_class_unit_tests.py
+Author: Peter Johnson
+Last date modified: 03/24/2020
+
+This program contains unit tests to test the functionality of a class Student.
+"""
+
+import unittest
+
+from class_definitions.student import Student
+
+
+class MyTestCase(unittest.TestCase):
+    def setUp(self):
+        self.student1 = Student('Smith', 'Greg', 'Business', 3.9)
+
+    def tearDown(self):
+        del self.student1
+
+    def test_object_created_required_attributes(self):
+        self.assertEqual(self.student1.last_name, 'Smith')
+        self.assertEqual(self.student1.first_name, 'Greg')
+        self.assertEqual(self.student1.major, 'Business')
+
+    def test_object_created_all_attributes(self):
+        self.assertEqual(self.student1.last_name, 'Smith')
+        self.assertEqual(self.student1.first_name, 'Greg')
+        self.assertEqual(self.student1.major, 'Business')
+        self.assertEqual(self.student1.gpa, 3.9)
+
+    def test_student_str(self):
+        self.assertEqual(str(self.student1), 'Smith, Greg has major Business with gpa: 3.9')
+
+    def test_object_not_created_error_last_name(self):
+        with self.assertRaises(ValueError):
+            s = Student('123', 'Greg', 'Business', 3.9)
+
+    def test_object_not_created_error_first_name(self):
+        with self.assertRaises(ValueError):
+            s = Student('Smith', '123', 'Business', 3.9)
+
+    def test_object_not_created_error_major(self):
+        with self.assertRaises(ValueError):
+            s = Student('Smith', 'Greg', '123', 3.9)
+
+    def test_object_not_created_error_gpa(self):
+        with self.assertRaises(ValueError):
+            s = Student('Smith', 'Greg', 'Business', 3)
+
+    def test_object_not_created_error_gpa_range(self):
+        with self.assertRaises(ValueError):
+            s = Student('Smith', 'Greg', 'Business', 4.5)
+
+    def test_object_not_created_error_gpa_range2(self):
+        with self.assertRaises(ValueError):
+            s = Student('Smith', 'Greg', 'Business', -0.5)
+
+
+if __name__ == '__main__':
+    unittest.main()
